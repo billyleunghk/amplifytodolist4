@@ -30,7 +30,7 @@ todoName {
 todoDescription { 
   margin-bottom: 0
 }
-/*
+
 button { 
   background-color: black;
   color: white;
@@ -42,15 +42,14 @@ button {
 amplify-authenticator {
   --amplify-font-family: 'Oswald', serif !important;
 }
-*/
+
 :root{
   --amplify-primary-color: red;
   --amplify-primary-tint: red; 
   --amplify-primary-shade: red;
 }
-/*
+
 amplify-authenticator {
   --background-color: none;
   --box-shadow: none;
 }
-*/

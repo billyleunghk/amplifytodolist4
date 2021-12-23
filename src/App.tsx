@@ -1,5 +1,6 @@
 import React, { useEffect, useState, SetStateAction } from 'react';
-import './App.css';
+//import './App.css';
+import '@aws-amplify/ui-react/styles.css';
 
 //import Amplify, { Auth } from 'aws-amplify'; //, { API, graphqlOperation }
 import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify';
@@ -9,26 +10,15 @@ import { listTodos } from './graphql/queries';
 
 import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
 import { AmplifyProvider } from '@aws-amplify/ui-react';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 
 
 import awsExports from "./aws-exports";
 Amplify.configure(awsExports);
 
-//const initialState = { name: '', description: '' }
+const initialState = { name: '', description: '' }
 
-export default function App() {
-  return (
-    <Authenticator>
-      {({ signOut, user }) => (
-        <main>
-          <h1>Hello {user.username}</h1>
-          <button onClick={signOut}>Sign out</button>
-        </main>
-      )}
-    </Authenticator>
-  );
-}
-/*
+
 const App = () => {
   const [formState, setFormState] = useState(initialState);
   const [todos, setTodos] = useState([]);
@@ -88,5 +78,4 @@ const App = () => {
   )
 }
 
-*/
-//export default App
+export default withAuthenticator(App);
