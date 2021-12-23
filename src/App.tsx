@@ -1,32 +1,51 @@
 import React, { useEffect, useState, SetStateAction } from 'react';
 import './App.css';
 
-import Amplify, { API, graphqlOperation } from 'aws-amplify';
+//import Amplify, { Auth } from 'aws-amplify'; //, { API, graphqlOperation }
+import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify';
+import { Authenticator } from '@aws-amplify/ui-react'
 import { createTodo } from './graphql/mutations';
 import { listTodos } from './graphql/queries';
+
+import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
+import { AmplifyProvider } from '@aws-amplify/ui-react';
+
 
 import awsExports from "./aws-exports";
 Amplify.configure(awsExports);
 
-const initialState = { name: '', description: '' }
+//const initialState = { name: '', description: '' }
+
+export default function App() {
+  return (
+    <Authenticator>
+      {({ signOut, user }) => (
+        <main>
+          <h1>Hello {user.username}</h1>
+          <button onClick={signOut}>Sign out</button>
+        </main>
+      )}
+    </Authenticator>
+  );
+}
+/*
 const App = () => {
   const [formState, setFormState] = useState(initialState);
   const [todos, setTodos] = useState([]);
-
   useEffect(() => {
     fetchTodos();
   }, []);
 
-  const setInput = (key: any, value: any):any => {
+  const setInput = (key: any, value: any): any => {
     setFormState({ ...formState, [key]: value });
   }
 
   const fetchTodos = async (): Promise<any> => {
     try {
-      const todoData:any = await API.graphql(graphqlOperation(listTodos));
-      const todos:any = todoData.data.listTodos.items;
+      const todoData: any = await API.graphql(graphqlOperation(listTodos));
+      const todos: any = todoData.data.listTodos.items;
       setTodos(todos);
-    } catch (err) { 
+    } catch (err) {
       console.log('error fetching todos');
     }
   }
@@ -37,7 +56,7 @@ const App = () => {
       const todo = { ...formState };
       setTodos([...todos, todo] as SetStateAction<never[]>);
       setFormState(initialState);
-      await API.graphql(graphqlOperation(createTodo, {input: todo}));
+      await API.graphql(graphqlOperation(createTodo, { input: todo }));
     } catch (err) {
       console.log('error creating todo:', err);
     }
@@ -48,7 +67,7 @@ const App = () => {
       <h2>Amplify Todos</h2>
       <input
         onChange={event => setInput('name', event.target.value)}
-        value={formState.name} 
+        value={formState.name}
         placeholder="Name"
       />
       <input
@@ -69,4 +88,5 @@ const App = () => {
   )
 }
 
-export default App
+*/
+//export default App
